@@ -16,9 +16,9 @@ import javafx.scene.layout.BorderPane;
  */
 public class FXMLPrototype extends BorderPane {
 	
-	//---------------------------------------------------------------
+	//--------------------------------------------------------------
 	
-	// --------------------------------------------------------------
+	// -------------------------------------------------------------
 	
 	/** The logger. */
 	private final Logger logger = Logger.getLogger(getClass().getName());

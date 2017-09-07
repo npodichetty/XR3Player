@@ -98,8 +98,8 @@ public class Main extends Application {
 	public static Properties internalInformation = new Properties();
 	static {
 		//----------Properties-------------
-		internalInformation.put("Version", 81);
-		internalInformation.put("ReleasedDate", "?/09/2017");
+		internalInformation.put("Version", 82);
+		internalInformation.put("ReleasedDate", "08/09/2017");
 		
 		System.out.println("Outside of Application Start Method");
 	}
@@ -229,7 +229,7 @@ public class Main extends Application {
 	/** The Constant djMode. */
 	public static DJMode djMode = new DJMode();
 	
-	public static EmotionsTabPane emotionsTabPane = new EmotionsTabPane();
+	public static EmotionsTabPane emotionsTabPane = new EmotionsTabPane(emotionListsController);
 	
 	/** The Search Window Smart Controller of the application */
 	public static SmartController searchWindowSmartController = new SmartController(Genre.SEARCHWINDOW, "Searching any Media", null);
@@ -268,8 +268,8 @@ public class Main extends Application {
 		window.setTitle("XR3Player V." + internalInformation.get("Version"));
 		double width = InfoTool.getVisualScreenWidth();
 		double height = InfoTool.getVisualScreenHeight();
-		width = 1380;
-		height = 800;
+		//width = 1380;
+		//height = 800;
 		window.setWidth(width * 0.95);
 		window.setHeight(height * 0.95);
 		window.centerOnScreen();
@@ -592,7 +592,7 @@ public class Main extends Application {
 	 */
 	private void checkJavaCombatibility() {
 		
-		//String minimumJavaVersion = "1.8.0_111"
+		//String minimumJavaVersion = "1.9.0_121";
 		String[] javaVersionElements = System.getProperty("java.runtime.version").split("\\.|_|-b");
 		
 		//String discard = javaVersionElements[0]
@@ -602,12 +602,10 @@ public class Main extends Application {
 		//String build = javaVersionElements[4]
 		//System.out.println(Arrays.asList(javaVersionElements));
 		
-		if (Integer.parseInt(major) < 8 || ( Integer.parseInt(major) < 8 && Integer.parseInt(update) < 111 ))
-			ActionTool
-					.showNotification(
-							"Important Problem with Java Version!", "XR3Player needs at least Java Version:1.8.0_111  -> Your current Java Version is:"
-									+ System.getProperty("java.version") + "\nThe application may crash or not work at all!\nPlease Update your Java Version :)",
-							Duration.seconds(40), NotificationType.ERROR);
+		if (Integer.parseInt(major) < 8 || ( Integer.parseInt(major) < 8 && Integer.parseInt(update) < 121 ))
+			ActionTool.showNotification("Problematic Java Version Installed!", "XR3Player needs at least Java [ 1.8.0_121 ] -> Installed Java Version [ "
+					+ System.getProperty("java.version") + " ]\nThe application may crash or not work at all!\n Update your Java Version :)", Duration.seconds(40),
+					NotificationType.ERROR);
 	}
 	
 	/**
@@ -755,6 +753,7 @@ public class Main extends Application {
 			dbManager.getPropertiesDb().setUpdatePropertiesLocked(true);
 			
 			//Load the Properties
+			dbManager.getPropertiesDb().getProperties().clear();
 			dbManager.getPropertiesDb().loadProperties();
 			
 			//Get the properties
